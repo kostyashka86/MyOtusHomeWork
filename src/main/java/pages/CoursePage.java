@@ -1,9 +1,10 @@
 package pages;
 
+import actions.CommonActions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class CoursePage extends AnyPageAbs {
+public class CoursePage extends CommonActions {
 
     public CoursePage(WebDriver driver) {
         super(driver);
