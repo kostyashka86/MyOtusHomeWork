@@ -1,6 +1,7 @@
 package driver.impl;
 
 import exeptions.DriverTypeNotSupported;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -17,6 +18,7 @@ public class FireFoxWebDriver implements IDriver {
     @Override
     public WebDriver newDriver() {
         FirefoxOptions firefoxOptions = new FirefoxOptions();
+        WebDriverManager.firefoxdriver().setup();
         firefoxOptions.addArguments("--no-sandbox");
         firefoxOptions.addArguments("--no-first-run");
         firefoxOptions.addArguments("--enable-extensions");

@@ -1,6 +1,7 @@
 package driver.impl;
 
 import exeptions.DriverTypeNotSupported;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -17,6 +18,7 @@ public class ChromeWebDriver implements IDriver {
     @Override
     public WebDriver newDriver() {
         ChromeOptions chromeOptions = new ChromeOptions();
+        WebDriverManager.chromedriver().setup();
         chromeOptions.addArguments("--no-sandbox");
         chromeOptions.addArguments("--no-first-run");
         chromeOptions.addArguments("--enable-extensions");

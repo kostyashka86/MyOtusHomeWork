@@ -1,6 +1,7 @@
 package driver.impl;
 
 import exeptions.DriverTypeNotSupported;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.logging.LogType;
@@ -17,6 +18,7 @@ public class OperaWebDriver implements IDriver {
     @Override
     public WebDriver newDriver() {
         OperaOptions operaOptions = new OperaOptions();
+        WebDriverManager.operadriver().setup();
         operaOptions.addArguments("--no-sandbox");
         operaOptions.addArguments("--no-first-run");
         operaOptions.addArguments("--enable-extensions");
