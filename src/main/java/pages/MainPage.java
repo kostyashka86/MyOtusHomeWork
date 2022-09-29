@@ -6,7 +6,6 @@ import datatable.DataTableCourse;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import java.text.ParseException;
@@ -40,14 +39,8 @@ public class MainPage extends CommonActions {
         return new MainPage(driver);
     }
 
-    @FindBy(xpath = "//div[@class='container container-lessons']")
-    public WebElement popularCourses;
-
-    @FindBy(xpath = "//div[@class='container-padding-bottom']")
-    public WebElement specializationsCourses;
-
     @FindBy(xpath = "//div[@class='lessons']//a[contains(@class,'lessons__new-item')]")
-    public List<WebElement> allCourses;
+    public List<WebElement> allCoursesBlockList;
 
     public MainPage checkFilterCourseByName() {
         String filter = System.getProperty("filter");
@@ -61,7 +54,7 @@ public class MainPage extends CommonActions {
 
     private List<String> getNamesOfAllCourses() {
         List<String> names = new ArrayList<>();
-        for (WebElement element : allCourses) {
+        for (WebElement element : allCoursesBlockList) {
             names.add(element.findElement(By.xpath(".//div[contains(@class,'lessons__new-item-title')]")).getText());
         }
         return names;
@@ -77,31 +70,16 @@ public class MainPage extends CommonActions {
         return this;
     }
 
-    public static String getNameOfCourse(WebElement course) {
-        return course.findElement(By.className("lessons__new-item-title")).getText();
-    }
-
     private HashMap<WebElement, DataTableCourse> getNamesAndDates() {
         HashMap<WebElement, DataTableCourse> nameAndDate = new HashMap<>();
         String nameCourse;
         String dateCourse;
-        List<WebElement> blockPopular = popularCourses.findElements(By.xpath("./div[@class='lessons']/a"));
-        for (WebElement element : blockPopular) {
+        for (WebElement element : allCoursesBlockList) {
             nameCourse = element
                     .findElement(By.xpath(".//div[contains(@class,'lessons__new-item-title')]"))
                     .getText();
             dateCourse = element
-                    .findElement(By.xpath(".//div[@class='lessons__new-item-start']"))
-                    .getText();
-            nameAndDate.put(element, new DataTableCourse(nameCourse, dateCourse));
-        }
-        List<WebElement> blockSpecial = specializationsCourses.findElements(By.xpath("./div[@class='lessons']/a"));
-        for (WebElement element : blockSpecial) {
-            nameCourse = element
-                    .findElement(By.xpath(".//div[contains(@class,'lessons__new-item-title')]"))
-                    .getText();
-            dateCourse = element
-                    .findElement(By.xpath(".//div[@class='lessons__new-item-time']"))
+                    .findElement(By.xpath(".//div[contains(@class, 'lessons__new-item-time') or contains(@class, 'lessons__new-item-start')]"))
                     .getText();
             nameAndDate.put(element, new DataTableCourse(nameCourse, dateCourse));
         }
@@ -109,23 +87,34 @@ public class MainPage extends CommonActions {
     }
 
     private WebElement getMinMaxDateOfCourse(HashMap<WebElement, DataTableCourse> nameAndDate, Boolean minMax) {
+        changeStringDateOnDate(nameAndDate);
+        BinaryOperator<Map.Entry<WebElement, DataTableCourse>> binaryOperator = getBinaryOperator(minMax);
+        WebElement result = nameAndDate
+                .entrySet()
+                .stream()
+                .filter(p -> p.getValue().getDate() != null)
+                .reduce(binaryOperator)
+                .map(Map.Entry::getKey)
+                .orElse(null);
+        return result;
+    }
+
+    private static BinaryOperator<Map.Entry<WebElement, DataTableCourse>> getBinaryOperator(Boolean minMax) {
+        BinaryOperator<Map.Entry<WebElement, DataTableCourse>> binaryOperator = minMax ?
+                (Map.Entry<WebElement, DataTableCourse> s1, Map.Entry<WebElement, DataTableCourse> s2)
+                        -> (s1.getValue().getDate().after(s2.getValue().getDate()) ? s1 : s2) :
+                (Map.Entry<WebElement, DataTableCourse> s1, Map.Entry<WebElement, DataTableCourse> s2)
+                        -> (s1.getValue().getDate().after(s2.getValue().getDate()) ? s2 : s1);
+        return binaryOperator;
+    }
+
+    private void changeStringDateOnDate(HashMap<WebElement, DataTableCourse> nameAndDate) {
         for (Map.Entry<WebElement, DataTableCourse> entry : nameAndDate.entrySet()) {
             Date date = dateParser(entry.getValue().getDateString());
             if (date != null) {
                 entry.getValue().setDate(date);
             }
         }
-        BinaryOperator<Map.Entry<WebElement, DataTableCourse>> binaryOperator = minMax ?
-                (Map.Entry<WebElement, DataTableCourse> s1, Map.Entry<WebElement, DataTableCourse> s2)
-                        -> (s1.getValue().getDate().after(s2.getValue().getDate()) ? s1 : s2) :
-                (Map.Entry<WebElement, DataTableCourse> s1, Map.Entry<WebElement, DataTableCourse> s2)
-                        -> (s1.getValue().getDate().after(s2.getValue().getDate()) ? s2 : s1);
-        WebElement result = nameAndDate.entrySet().stream()
-                .filter(p -> p.getValue().getDate() != null)
-                .reduce(binaryOperator)
-                .map(p -> p.getKey())
-                .get();
-        return result;
     }
 
     private Date dateParser(String stringDateFromSite) {
@@ -159,18 +148,5 @@ public class MainPage extends CommonActions {
     private String getMonth(String month) {
         String monthRUS = String.valueOf(month.toCharArray(), 0, 3);
         return Months.findMonth(monthRUS);
-    }
-
-    public void moveToElement(WebElement element) {
-        Actions actions = new Actions(driver);
-        try {
-            actions.moveToElement(element).build().perform();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void clickToElement(WebElement element) {
-        element.click();
     }
 }
