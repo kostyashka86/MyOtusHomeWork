@@ -3,7 +3,7 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class CoursePage extends Page {
+public class CoursePage extends AnyPageAbs {
 
     public CoursePage(WebDriver driver) {
         super(driver);

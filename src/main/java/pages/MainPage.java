@@ -1,5 +1,6 @@
 package pages;
 
+import actions.CommonActions;
 import data.Months;
 import datatable.DataTableCourse;
 import org.openqa.selenium.By;
@@ -24,14 +25,18 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class MainPage extends Page {
+public class MainPage extends CommonActions {
 
     public MainPage(WebDriver driver) {
         super(driver);
     }
 
+    private String getUrl() {
+        return System.getProperty("base.url", "https://otus.ru");
+    }
+
     public MainPage open() {
-        driver.get(url);
+        driver.get(getUrl());
         return new MainPage(driver);
     }
 
