@@ -10,6 +10,7 @@ import pages.MainPage;
 
 @ExtendWith(UIExtension.class)
 public class FindCourseTest {
+
     @Driver
     public WebDriver driver;
 
@@ -17,7 +18,7 @@ public class FindCourseTest {
     @DisplayName("Тест поиска курса по фильтру")
     public void testFindCourseByName() {
         new MainPage(driver)
-                .open()
+                .openMainPage()
                 .checkFilterCourseByName();
     }
 
@@ -25,7 +26,7 @@ public class FindCourseTest {
     @DisplayName("Тест поиска самого раннего курса")
     public void testFindEarliestCourse() {
         new MainPage(driver)
-                .open()
+                .openMainPage()
                 .findEarliestCourse();
     }
 
@@ -33,7 +34,7 @@ public class FindCourseTest {
     @DisplayName("Тест поиска самого позднего курса")
     public void testGetLatestCourse() {
         new MainPage(driver)
-                .open()
+                .openMainPage()
                 .findLatestCourse();
     }
 }

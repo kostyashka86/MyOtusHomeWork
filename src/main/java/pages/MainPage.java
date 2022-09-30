@@ -31,12 +31,12 @@ public class MainPage extends CommonActions {
     }
 
     private String getUrl() {
-        return System.getProperty("base.url", "https://otus.ru");
+        return System.getProperty("base.url");
     }
 
-    public MainPage open() {
+    public MainPage openMainPage() {
         driver.get(getUrl());
-        return new MainPage(driver);
+        return this;
     }
 
     @FindBy(xpath = "//div[@class='lessons']//a[contains(@class,'lessons__new-item')]")
