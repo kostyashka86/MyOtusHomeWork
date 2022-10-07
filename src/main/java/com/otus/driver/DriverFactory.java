@@ -1,18 +1,25 @@
 package com.otus.driver;
 
+import com.google.inject.Inject;
 import com.otus.driver.impl.ChromeWebDriver;
 import com.otus.driver.impl.FireFoxWebDriver;
 import com.otus.driver.impl.OperaWebDriver;
 import com.otus.exeptions.DriverTypeNotSupported;
+import diconfig.GuiceScoped;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
-import java.util.Locale;
-
 public class DriverFactory implements IDriverFactory {
-    private String browserType = System.getProperty("browser").toLowerCase(Locale.ROOT);
+
+    public GuiceScoped guiceScoped;
+
+    @Inject
+    public DriverFactory(GuiceScoped guiceScoped) {
+        this.guiceScoped = guiceScoped;
+    }
+
     @Override
     public EventFiringWebDriver getDriver() {
-        switch (this.browserType) {
+        switch (this.guiceScoped.browser) {
             case "chrome": {
                 return new EventFiringWebDriver(new ChromeWebDriver().newDriver());
             }
@@ -24,7 +31,7 @@ public class DriverFactory implements IDriverFactory {
             }
             default:
                 try {
-                    throw new DriverTypeNotSupported(this.browserType);
+                    throw new DriverTypeNotSupported(this.guiceScoped.browser);
                 } catch (DriverTypeNotSupported ex) {
                     ex.printStackTrace();
                     return null;

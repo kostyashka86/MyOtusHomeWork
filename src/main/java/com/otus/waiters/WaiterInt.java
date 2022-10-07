@@ -1,9 +1,7 @@
 package com.otus.waiters;
 
 import org.openqa.selenium.support.ui.ExpectedCondition;
-/**
- * Интерфейс стандартного набора ожиданий
- */
+
 public interface WaiterInt {
     boolean waitForCondition(ExpectedCondition condition);
 

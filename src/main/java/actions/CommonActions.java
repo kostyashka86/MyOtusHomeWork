@@ -1,7 +1,7 @@
-package com.otus.actions;
+package actions;
 
-import com.otus.diconfig.GuiceScoped;
 import com.otus.waiters.StandartWaiter;
+import diconfig.GuiceScoped;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;

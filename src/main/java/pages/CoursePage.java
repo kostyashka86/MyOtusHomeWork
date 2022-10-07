@@ -1,7 +1,7 @@
-package com.otus.pages;
+package pages;
 
-import com.otus.actions.CommonActions;
-import com.otus.diconfig.GuiceScoped;
+import actions.CommonActions;
+import diconfig.GuiceScoped;
 import org.openqa.selenium.By;
 
 public class CoursePage extends CommonActions {

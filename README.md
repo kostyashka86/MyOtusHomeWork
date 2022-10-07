@@ -1,15 +1,7 @@
-# MyOtusHomeWork
+# MyOtusHomeWork2
+
 Команда запуска тестов через консоль:
 
 `
-mvn clean test -Dbrowser="chrome" -Dfilter="QA"
+mvn clean test -Dtest=CucumberRunnerTest
 `
-или через UI Idea:
-
-в `Edit Configuration` в поле `VM Options` прописать `-Dbrowser="chrome" -Dfilter="QA"`
-
-где
-
-**-Dbrowser** - имя браузера;
-
-**-Dfilter** - фильтр по имени курсов; Например, выбрать все курсы, в имени которых есть 'QA'
