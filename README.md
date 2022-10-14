@@ -3,5 +3,5 @@
 Команда запуска тестов через консоль:
 
 `
-mvn clean test -Dtest=CucumberRunnerTest
+mvn clean test -Durl="https://otus.ru/"
 `

@@ -16,7 +16,7 @@ import java.util.List;
 public class MainPageSteps {
 
     @Inject
-    private MainPage mainPage;
+    public MainPage mainPage;
     @Inject
     private GuiceScoped guiceScoped;
     @Inject
@@ -26,7 +26,7 @@ public class MainPageSteps {
     public void openMainPage(String browser) {
         guiceScoped.browser = browser;
         guiceScoped.driver = factoryDriver.getDriver();
-        mainPage.open();
+        mainPage.open(System.getProperty("url"));
     }
 
     @Если("Фильтр равен {string}")

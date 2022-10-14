@@ -1,6 +1,5 @@
 package pages;
 
-import actions.CommonActions;
 import com.google.inject.Inject;
 import com.otus.data.Months;
 import com.otus.datatable.DataTableCourse;
@@ -25,17 +24,11 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class MainPage extends CommonActions {
-
-    private static final String url = "https://otus.ru/";
+public class MainPage extends BasePage<MainPage> {
 
     @Inject
     public MainPage(GuiceScoped guiceScoped) {
         super(guiceScoped);
-    }
-
-    public void open() {
-        guiceScoped.driver.get(url);
     }
 
     @FindBy(xpath = "//div[@class='lessons']//a[contains(@class,'lessons__new-item')]")
