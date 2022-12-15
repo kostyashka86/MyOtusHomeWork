@@ -1,6 +1,5 @@
 package pages;
 
-import actions.CommonActions;
 import data.Months;
 import datatable.DataTableCourse;
 import org.openqa.selenium.By;
@@ -22,37 +21,30 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertTrue;
 
-public class MainPage extends CommonActions {
+public class MainPage extends Page {
 
     public MainPage(WebDriver driver) {
         super(driver);
     }
-
     private String getUrl() {
         return System.getProperty("base.url");
     }
 
-    public MainPage openMainPage() {
-        driver.get(getUrl());
-        return this;
-    }
-
     @FindBy(xpath = "//div[@class='lessons']//a[contains(@class,'lessons__new-item')]")
-    public List<WebElement> allCoursesBlockList;
+    public static List<WebElement> allCoursesBlockList;
 
-    public MainPage checkFilterCourseByName() {
-        String filter = System.getProperty("filter");
+    public void checkFilterCourseByName() {
+        String filter = "QA";
         getNamesOfAllCourses()
                 .stream()
                 .filter(p -> p.contains(filter))
                 .collect(Collectors.toList())
                 .forEach(i -> assertTrue(i.contains(filter)));
-        return this;
     }
 
-    private List<String> getNamesOfAllCourses() {
+    private static List<String> getNamesOfAllCourses() {
         List<String> names = new ArrayList<>();
         for (WebElement element : allCoursesBlockList) {
             names.add(element.findElement(By.xpath(".//div[contains(@class,'lessons__new-item-title')]")).getText());
@@ -60,17 +52,15 @@ public class MainPage extends CommonActions {
         return names;
     }
 
-    public MainPage findEarliestCourse() {
+    public void findEarliestCourse() {
         System.out.println("Самый ранний курс: " + getMinMaxDateOfCourse(getNamesAndDates(), false).getText());
-        return this;
     }
 
-    public MainPage findLatestCourse() {
+    public void findLatestCourse() {
         System.out.println("Самый поздний курс: " + getMinMaxDateOfCourse(getNamesAndDates(), true).getText());
-        return this;
     }
 
-    private HashMap<WebElement, DataTableCourse> getNamesAndDates() {
+    private static HashMap<WebElement, DataTableCourse> getNamesAndDates() {
         HashMap<WebElement, DataTableCourse> nameAndDate = new HashMap<>();
         String nameCourse;
         String dateCourse;
@@ -86,7 +76,7 @@ public class MainPage extends CommonActions {
         return nameAndDate;
     }
 
-    private WebElement getMinMaxDateOfCourse(HashMap<WebElement, DataTableCourse> nameAndDate, Boolean minMax) {
+    private static WebElement getMinMaxDateOfCourse(HashMap<WebElement, DataTableCourse> nameAndDate, Boolean minMax) {
         changeStringDateOnDate(nameAndDate);
         BinaryOperator<Map.Entry<WebElement, DataTableCourse>> binaryOperator = getBinaryOperator(minMax);
         WebElement result = nameAndDate
@@ -108,7 +98,7 @@ public class MainPage extends CommonActions {
         return binaryOperator;
     }
 
-    private void changeStringDateOnDate(HashMap<WebElement, DataTableCourse> nameAndDate) {
+    private static void changeStringDateOnDate(HashMap<WebElement, DataTableCourse> nameAndDate) {
         for (Map.Entry<WebElement, DataTableCourse> entry : nameAndDate.entrySet()) {
             Date date = dateParser(entry.getValue().getDateString());
             if (date != null) {
@@ -117,7 +107,7 @@ public class MainPage extends CommonActions {
         }
     }
 
-    private Date dateParser(String stringDateFromSite) {
+    private static Date dateParser(String stringDateFromSite) {
         int day;
         String month;
         String year;
@@ -133,7 +123,7 @@ public class MainPage extends CommonActions {
             return null;
     }
 
-    private Date stringToDate(int day, String month, String year) {
+    private static Date stringToDate(int day, String month, String year) {
         LocalDate date = LocalDate.now();
         String monthNumber = getMonth(month);
         try {
@@ -145,7 +135,7 @@ public class MainPage extends CommonActions {
         }
     }
 
-    private String getMonth(String month) {
+    private static String getMonth(String month) {
         String monthRUS = String.valueOf(month.toCharArray(), 0, 3);
         return Months.findMonth(monthRUS);
     }

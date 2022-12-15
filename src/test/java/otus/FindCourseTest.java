@@ -1,24 +1,15 @@
 package otus;
 
-import annotaion.Driver;
-import extensions.UIExtension;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.openqa.selenium.WebDriver;
+import io.qameta.allure.junit4.DisplayName;
+import org.junit.Test;
 import pages.MainPage;
 
-@ExtendWith(UIExtension.class)
-public class FindCourseTest {
-
-    @Driver
-    public WebDriver driver;
+public class FindCourseTest extends BaseTest {
 
     @Test
     @DisplayName("Тест поиска курса по фильтру")
     public void testFindCourseByName() {
         new MainPage(driver)
-                .openMainPage()
                 .checkFilterCourseByName();
     }
 
@@ -26,7 +17,6 @@ public class FindCourseTest {
     @DisplayName("Тест поиска самого раннего курса")
     public void testFindEarliestCourse() {
         new MainPage(driver)
-                .openMainPage()
                 .findEarliestCourse();
     }
 
@@ -34,7 +24,6 @@ public class FindCourseTest {
     @DisplayName("Тест поиска самого позднего курса")
     public void testGetLatestCourse() {
         new MainPage(driver)
-                .openMainPage()
                 .findLatestCourse();
     }
 }

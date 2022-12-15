@@ -1,0 +1,32 @@
+{
+  "chrome": {
+    "default": "107.0",
+    "versions": {
+      "107.0": {
+        "image": "selenoid/chrome:107.0",
+        "port": "4444",
+        "path": "/"
+      },
+      "106.0": {
+        "image": "selenoid/chrome:106.0",
+        "port": "4444",
+        "path": "/"
+      }
+    }
+  },
+  "opera": {
+    "default": "91.0",
+    "versions": {
+      "91.0": {
+        "image": "selenoid/opera:91.0",
+        "port": "4444",
+        "path": "/"
+      },
+      "90.0": {
+        "image": "selenoid/opera:90.0",
+        "port": "4444",
+        "path": "/"
+      }
+    }
+  }
+}
