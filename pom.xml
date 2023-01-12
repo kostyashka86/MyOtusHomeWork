@@ -21,6 +21,12 @@
         <filter/>
         <test.project.language>RU</test.project.language>
         <enableVNC>true</enableVNC>
+        <forkCount>0</forkCount>
+        <reuseForks>true</reuseForks>
+        <parallel>all</parallel>
+        <perCoreThreadCount>false</perCoreThreadCount>
+        <useUnlimitedThreads>true</useUnlimitedThreads>
+        <thread.count>32</thread.count>
     </properties>
 
     <dependencies>
@@ -93,6 +99,12 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire.plugin.version}</version>
                 <configuration>
+                    <forkCount>${forkCount}</forkCount>
+                    <reuseForks>${reuseForks}</reuseForks>
+                    <parallel>${parallel}</parallel>
+                    <perCoreThreadCount>${perCoreThreadCount}</perCoreThreadCount>
+                    <useUnlimitedThreads>${useUnlimitedThreads}</useUnlimitedThreads>
+                    <threadCountMethods>${thread.count}</threadCountMethods>
                     <systemProperties>
                         <base.url>${base.url}</base.url>
                         <browser>${browser}</browser>
