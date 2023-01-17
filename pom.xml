@@ -17,7 +17,7 @@
         <aspectj.version>1.9.5</aspectj.version>
         <browser>chrome</browser>
         <base.url>https://otus.ru</base.url>
-        <webdriver.remote.url>http://127.0.0.1:4445/wd/hub</webdriver.remote.url>
+        <webdriver.remote.url>http://127.0.0.1:4444/wd/hub</webdriver.remote.url>
         <filter/>
         <test.project.language>RU</test.project.language>
         <enableVNC>true</enableVNC>
