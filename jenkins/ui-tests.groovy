@@ -8,7 +8,7 @@ timeout(60) {
             def exitCode = sh(
                     returnStatus: true,
                     script: """
-                    mvn clean test -Dbrowser=$BROWSER -Dfilter=$FILTER
+                    mvn clean test -Dbrowser=$BROWSER_NAME -Dfilter=$FILTER
                     """
             )
             if (exitCode == 1) {
