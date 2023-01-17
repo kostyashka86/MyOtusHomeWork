@@ -8,7 +8,7 @@ timeout(60) {
             def exitCode = sh(
                     returnStatus: true,
                     script: """
-                    mvn test -Dbrowser=$BROWSER_NAME -Dfilter=$FILTER
+                    mvn test -Dbrowser=$BROWSER_NAME -Dfilter=$FILTER -Dwebdriver.remote.url=$GRID_URL
                     """
             )
             if (exitCode == 1) {
