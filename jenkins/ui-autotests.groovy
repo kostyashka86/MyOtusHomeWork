@@ -3,7 +3,7 @@ timeout(60) {
         timestamps {
             wrap([$class: 'BuildUser']) {
                 ownerInfo = """<b>Owner:</b> ${env.BUILD_USER}"""
-                currentBuild.description = summary
+                currentBuild.description = ownerInfo
             }
             stage('Checkout') {
                 checkout scm
