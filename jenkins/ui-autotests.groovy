@@ -3,7 +3,7 @@ timeout(60) {
         timestamps {
             wrap([$class: 'BuildUser']) {
                 ownerInfo = """<b>Owner:</b> ${env.BUILD_USER}"""
-                currentBuild.description = ownerInfo
+                currentBuild.description = summary
             }
             stage('Checkout') {
                 checkout scm
@@ -13,7 +13,7 @@ timeout(60) {
                 def exitCode = sh(
                         returnStatus: true,
                         script: """
-                mvn clean test -Dbrowser="chrome" -Dfilter="QA"
+                mvn clean test -Dbrowser=$BROWSER -Dfilter=$FILTER
                 """
                 )
                 if (exitCode == 1) {
