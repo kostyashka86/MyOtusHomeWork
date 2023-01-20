@@ -3,6 +3,7 @@ package pages;
 import actions.CommonActions;
 import data.Months;
 import datatable.DataTableCourse;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -34,6 +35,7 @@ public class MainPage extends CommonActions {
         return System.getProperty("base.url");
     }
 
+    @Step("Открываем главную страницу")
     public MainPage openMainPage() {
         driver.get(getUrl());
         return this;
